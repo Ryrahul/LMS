@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  email      String       @unique
+  password   String
+  role       String
+  Course     Course[]
+  Attendance Attendance[]
+  Feedback   Feedback[]
+}
+
+model Course {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  student  User[]
+  subjects Subject[]
+
+  Feedback Feedback[]
+}
+
+model Subject {
+  id            Int             @id @default(autoincrement())
+  title         String
+  courseId      Int
+  course        Course          @relation(fields: [courseId], references: [id])
+  quizzes       Quiz[]
+  tests         Test[]
+  attendance    Attendance[]
+  Feedback      Feedback[]
+  StudyMaterial StudyMaterial[]
+}
+
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  studentId Int
+  subjectId Int
+  student   User     @relation(fields: [studentId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+
+model Quiz {
+  id        Int        @id @default(autoincrement())
+  title     String
+  subjectId Int
+  subject   Subject    @relation(fields: [subjectId], references: [id])
+  questions Question[]
+}
+
+model Test {
+  id        Int        @id @default(autoincrement())
+  title     String
+  subjectId Int
+  subject   Subject    @relation(fields: [subjectId], references: [id])
+  questions Question[]
+}
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  text      String
+  rating    Int
+  courseId  Int?
+  subjectId Int?
+  course    Course?  @relation(fields: [courseId], references: [id])
+  subject   Subject? @relation(fields: [subjectId], references: [id])
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Question {
+  id      Int      @id @default(autoincrement())
+  text    String
+  quizId  Int
+  quiz    Quiz     @relation(fields: [quizId], references: [id])
+  choices Choice[]
+  Test    Test?    @relation(fields: [testId], references: [id])
+  testId  Int?
+}
+
+model Choice {
+  id         Int      @id @default(autoincrement())
+  text       String
+  isCorrect  Boolean
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+model StudyMaterial {
+  id        Int     @id @default(autoincrement())
+  title     String
+  fileUrl   String
+  fileType  String
+  subjectId Int
+  subject   Subject @relation(fields: [subjectId], references: [id])
+}
