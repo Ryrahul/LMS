@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post,ParseIntPipe, } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AuthServices } from './auth.services';
 import { SingupDto } from './dto/Signup.dto';
 
@@ -10,9 +17,12 @@ export class AuthController {
     return this.authservice.signUp(dto);
   }
   @Get('verify/:token/:id')
- verification(@Param('token') token: string, @Param('id', ParseIntPipe) id: number)  {
-  console.log(token)
+  verification(
+    @Param('token') token: string,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    console.log(token);
 
-    return this.authservice.verification(token,id)
+    return this.authservice.verification(token, id);
   }
 }
