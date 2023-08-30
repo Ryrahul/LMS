@@ -15,10 +15,11 @@ model User {
   username   String       @unique
   email      String       @unique
   password   String
-  role       String
+  role       String?      @default("Student")
   Course     Course[]
   Attendance Attendance[]
   Feedback   Feedback[]
+  Verified    Boolean @default(false)
 }
 
 model Course {
