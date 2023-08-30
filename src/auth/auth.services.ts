@@ -10,6 +10,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { EmailService } from './email.services';
 import { LoginDto } from './dto/Login.dto';
 import { VerificationService } from './Verification';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+
 
 @Injectable()
 export class AuthServices {
@@ -17,6 +20,8 @@ export class AuthServices {
     private prisma: PrismaService,
     private email: EmailService,
     private status: VerificationService,
+    private jwt:JwtService,
+    private config:ConfigService
   ) {}
   async signUp(dto: SingupDto) {
     try {
@@ -33,7 +38,6 @@ export class AuthServices {
           Unique_String: verificationToken,
         },
       });
-      console.log(user);
       await this.email.sendVerificationEmail(
         dto.email,
         verificationToken,
@@ -85,12 +89,22 @@ export class AuthServices {
     }
     const status = await this.status.verification(student.id);
     if (status) {
-      return student;
+      return {token:await this.signToken(student.username,student.id)};
     }
     return {
       message:"Email not verified"
     }
 
     
+  }
+  signToken(username:string,id:number){
+    const payload={
+      username,id
+    }
+    return this.jwt.signAsync(payload,{
+      expiresIn:'15m',
+      secret:this.config.get('JWT_SECRET')
+    })
+
   }
 }
