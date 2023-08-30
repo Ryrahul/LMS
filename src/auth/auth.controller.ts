@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthServices } from './auth.services';
 import { SingupDto } from './dto/Signup.dto';
+import { LoginDto } from './dto/Login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -24,5 +25,9 @@ export class AuthController {
     console.log(token);
 
     return this.authservice.verification(token, id);
+  }
+  @Post('login')
+  login(@Body()dto:LoginDto){
+    return this.authservice.login(dto)
   }
 }

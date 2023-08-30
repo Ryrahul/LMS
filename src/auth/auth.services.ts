@@ -1,15 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.services';
 import { SingupDto } from './dto/Signup.dto';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { EmailService } from './email.services';
+import { LoginDto } from './dto/Login.dto';
+import { VerificationService } from './Verification';
 
 @Injectable()
 export class AuthServices {
   constructor(
     private prisma: PrismaService,
     private email: EmailService,
+    private status: VerificationService,
   ) {}
   async signUp(dto: SingupDto) {
     try {
@@ -62,5 +69,28 @@ export class AuthServices {
       },
     });
     return user;
+  }
+  async login(dto: LoginDto) {
+    const student = await this.prisma.user.findUnique({
+      where: {
+        username: dto.username,
+      },
+    });
+    if (!student) {
+      throw new ForbiddenException('Credentials Incorrect');
+    }
+    const match = await bcrypt.compare(dto.password, student.password);
+    if (!match) {
+      new ForbiddenException('Credentials Incorrect');
+    }
+    const status = await this.status.verification(student.id);
+    if (status) {
+      return student;
+    }
+    return {
+      message:"Email not verified"
+    }
+
+    
   }
 }
