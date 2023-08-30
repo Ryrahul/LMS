@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  username   String       @unique
-  email      String       @unique
-  password   String
-  role       String?      @default("Student")
-  Course     Course[]
-  Attendance Attendance[]
-  Feedback   Feedback[]
-  Verified    Boolean @default(false)
+  id            Int          @id @default(autoincrement())
+  username      String       @unique
+  email         String       @unique
+  password      String
+  role          String?      @default("Student")
+  Course        Course[]
+  Attendance    Attendance[]
+  Feedback      Feedback[]
+  Unique_String String?      @unique
+  Verified      Boolean      @default(false)
 }
 
 model Course {
