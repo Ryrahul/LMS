@@ -1,4 +1,4 @@
-import {  Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.services';
 @Injectable()
 export class VerificationService {
@@ -12,7 +12,7 @@ export class VerificationService {
     const status = Verified.Verified;
 
     if (!status) {
-      return false
+      return false;
     }
     return true;
   }

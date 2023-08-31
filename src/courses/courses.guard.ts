@@ -3,18 +3,16 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.services';
 
-
 @Injectable()
 export class AdminGuard implements CanActivate {
   constructor(private prismaService: PrismaService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const userId = request.user.userId; 
+    const userId = request.user.userId;
 
-  
     const isAdmin = await this.isUserAdmin(userId);
-    console.log(isAdmin)
+    console.log(isAdmin);
 
     return isAdmin;
   }
@@ -28,6 +26,6 @@ export class AdminGuard implements CanActivate {
       where: { id: userId },
     });
 
-    return user?.role ==='admin';
+    return user?.role === 'admin';
   }
 }

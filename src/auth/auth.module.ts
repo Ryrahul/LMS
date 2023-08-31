@@ -13,6 +13,6 @@ import { JwtStrategy } from './auth.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthServices, EmailService, VerificationService,JwtStrategy],
+  providers: [AuthServices, EmailService, VerificationService, JwtStrategy],
 })
 export class AuthModule {}

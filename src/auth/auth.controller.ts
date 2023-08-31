@@ -34,7 +34,7 @@ export class AuthController {
   }
   @UseGuards(JwtAuthGuard)
   @Get('jwt')
-  jwt(){
-    return 'hi'
+  jwt() {
+    return 'hi';
   }
 }

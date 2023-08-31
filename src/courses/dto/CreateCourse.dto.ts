@@ -10,9 +10,9 @@ export class CreateCourseDto {
 
   @IsArray()
   @IsOptional()
-  studentIds: number[]; 
+  studentIds: number[];
 
   @IsArray()
   @IsOptional()
-  subjectIds: number[]; 
+  subjectIds: number[];
 }
