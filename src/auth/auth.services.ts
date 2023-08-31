@@ -13,15 +13,14 @@ import { VerificationService } from './Verification';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-
 @Injectable()
 export class AuthServices {
   constructor(
     private prisma: PrismaService,
     private email: EmailService,
     private status: VerificationService,
-    private jwt:JwtService,
-    private config:ConfigService
+    private jwt: JwtService,
+    private config: ConfigService,
   ) {}
   async signUp(dto: SingupDto) {
     try {
@@ -89,22 +88,20 @@ export class AuthServices {
     }
     const status = await this.status.verification(student.id);
     if (status) {
-      return {token:await this.signToken(student.username,student.id)};
+      return { token: await this.signToken(student.username, student.id) };
     }
     return {
-      message:"Email not verified"
-    }
-
-    
+      message: 'Email not verified',
+    };
   }
-  signToken(username:string,id:number){
-    const payload={
-      username,id
-    }
-    return this.jwt.signAsync(payload,{
-      expiresIn:'15m',
-      secret:this.config.get('JWT_SECRET')
-    })
-
+  signToken(username: string, id: number) {
+    const payload = {
+      username,
+      id,
+    };
+    return this.jwt.signAsync(payload, {
+      expiresIn: '15m',
+      secret: this.config.get('JWT_SECRET'),
+    });
   }
 }

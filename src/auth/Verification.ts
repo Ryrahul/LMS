@@ -9,7 +9,6 @@ export class VerificationService {
         id: id,
       },
     });
-    console.log(Verified.Verified)
     const status = Verified.Verified;
 
     if (!status) {

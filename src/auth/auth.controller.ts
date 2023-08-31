@@ -5,10 +5,12 @@ import {
   Param,
   Post,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthServices } from './auth.services';
 import { SingupDto } from './dto/Signup.dto';
 import { LoginDto } from './dto/Login.dto';
+import { JwtAuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +29,12 @@ export class AuthController {
     return this.authservice.verification(token, id);
   }
   @Post('login')
-  login(@Body()dto:LoginDto){
-    return this.authservice.login(dto)
+  login(@Body() dto: LoginDto) {
+    return this.authservice.login(dto);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Get('jwt')
+  jwt(){
+    return 'hi'
   }
 }
