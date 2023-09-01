@@ -7,31 +7,27 @@ import { CreateSubjectDTO } from './dto/CreateSubject.dto';
 export class SubjectsService {
   constructor(private prisma: PrismaService) {}
   async createCourse(dto: CreateSubjectDTO) {
-    try{
-    const subject = await this.prisma.subject.create({
-      data: {
-        title: dto.title,
-        courseId: dto.courseId,
+    try {
+      const subject = await this.prisma.subject.create({
+        data: {
+          title: dto.title,
+          courseId: dto.courseId,
+        },
+      });
+      return subject;
+    } catch (e) {
+      return e.message;
+    }
+  }
+  async deleteCourse(id: number) {
+    const course = await this.prisma.subject.delete({
+      where: {
+        id,
       },
     });
-    return subject
-
-  }
-  catch(e){
-    return e.message
-
-  }
-}
-async deleteCourse(id:number){
-    const course= await this.prisma.subject.delete({
-        where:{
-            id
-        }
-    })
     return {
-        message:"Subject deleted succesfully",
-        deletedSubject:course
-    }
-
-}
+      message: 'Subject deleted succesfully',
+      deletedSubject: course,
+    };
+  }
 }

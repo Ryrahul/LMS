@@ -5,6 +5,6 @@ import { AdminGuard } from './courses.guard';
 
 @Module({
   controllers: [CoursesController],
-  providers: [CourseService]
+  providers: [CourseService],
 })
 export class CoursesModule {}
