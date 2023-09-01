@@ -9,12 +9,12 @@ export class UpdateCourseDTO {
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
-  addedStudentIds?: number[]; 
+  addedStudentIds?: number[];
 
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
-  removedStudentIds?: number[]; 
+  removedStudentIds?: number[];
 
   @IsOptional()
   @IsArray()

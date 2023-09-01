@@ -15,9 +15,9 @@ export class CourseService {
           student: {
             connect: dto.studentIds.map((studentId) => ({ id: studentId })),
           },
-          subjects:{
-            connect:dto.subjectIds.map((subjectsId)=>({id:subjectsId}))
-          }
+          subjects: {
+            connect: dto.subjectIds.map((subjectsId) => ({ id: subjectsId })),
+          },
         },
       });
       return course;
@@ -25,40 +25,36 @@ export class CourseService {
       return e.message;
     }
   }
-  async UpdateCourse(dto:UpdateCourseDTO,id:number){
-    try{
-      
-      const course=await this.prisma.course.update({
-        where:{id:id},
-        data:{
-          
+  async UpdateCourse(dto: UpdateCourseDTO, id: number) {
+    try {
+      const course = await this.prisma.course.update({
+        where: { id: id },
+        data: {
           description: dto.description,
           student: {
-            connect: dto.addedStudentIds.map((studentId) => ({ id: studentId }))|| [],
-            disconnect:dto.removedStudentIds.map((students)=>({id:students}))|| []
-            
+            connect:
+              dto.addedStudentIds.map((studentId) => ({ id: studentId })) || [],
+            disconnect:
+              dto.removedStudentIds.map((students) => ({ id: students })) || [],
           },
-          subjects:{
-            connect:dto.subjectIds.map((subjectsId)=>({id:subjectsId}))
-          }
-          
-        }
-      })
-      
-      return course
-    }
-    catch(e){
-      return e.message
-    }
-  }
-  async getCourse(){
-    return this.prisma.course.findMany()
-  }
-  async deleteCourse(id:number){
-  const course= await this.prisma.course.delete({
-      where:{id}
-    })
-    return {message: " Course has been deleted", deletedCourse:course}
+          subjects: {
+            connect: dto.subjectIds.map((subjectsId) => ({ id: subjectsId })),
+          },
+        },
+      });
 
+      return course;
+    } catch (e) {
+      return e.message;
+    }
+  }
+  async getCourse() {
+    return this.prisma.course.findMany();
+  }
+  async deleteCourse(id: number) {
+    const course = await this.prisma.course.delete({
+      where: { id },
+    });
+    return { message: ' Course has been deleted', deletedCourse: course };
   }
 }

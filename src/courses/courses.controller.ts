@@ -1,4 +1,14 @@
-import { Controller, UseGuards, Post, Body, Param, ParseIntPipe, Put, Get, Delete } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  Param,
+  ParseIntPipe,
+  Put,
+  Get,
+  Delete,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreateCourseDto } from './dto/CreateCourse.dto';
 import { CourseService } from './courses.services';
@@ -13,21 +23,22 @@ export class CoursesController {
   createcourse(@Body() dto: CreateCourseDto) {
     return this.course.CreateCourse(dto);
   }
-    @UseGuards(JwtAuthGuard, AdminGuard)
-
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Put('/:id')
-  updatecourse(@Param('id', ParseIntPipe) id: number,@Body()dto:UpdateCourseDTO){
-    return this.course.UpdateCourse(dto,id)
-  
+  updatecourse(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateCourseDTO,
+  ) {
+    return this.course.UpdateCourse(dto, id);
   }
   @UseGuards(JwtAuthGuard)
   @Get()
-  viewcourse(){
-    return this.course.getCourse()
+  viewcourse() {
+    return this.course.getCourse();
   }
-   @UseGuards(JwtAuthGuard, AdminGuard)
-   @Delete('/:id')
-  deletecourse(@Param('id',ParseIntPipe)id:number){
-    return this.course.deleteCourse(id)
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @Delete('/:id')
+  deletecourse(@Param('id', ParseIntPipe) id: number) {
+    return this.course.deleteCourse(id);
   }
 }
