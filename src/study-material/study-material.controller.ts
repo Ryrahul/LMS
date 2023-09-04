@@ -13,11 +13,8 @@ import { StudyMaterialService } from './study-material.service';
 
 @Controller('study-material')
 export class StudyMaterialController {
-  constructor(
-    private studymaterial: StudyMaterialService,
-  ) {}
-  
-  
+  constructor(private studymaterial: StudyMaterialService) {}
+
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerConfig))
   async uploadFile(

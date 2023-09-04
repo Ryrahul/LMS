@@ -1,5 +1,12 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNotEmpty, IsMimeType, IsNumber, isNumber, IsInt } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsMimeType,
+  IsNumber,
+  isNumber,
+  IsInt,
+} from 'class-validator';
 
 export class CreateStudyMaterialDto {
   @IsString()

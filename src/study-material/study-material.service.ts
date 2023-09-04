@@ -10,17 +10,18 @@ export class StudyMaterialService {
     private prismaservice: PrismaService,
     private configService: ConfigService,
   ) {}
-  async createStudyMaterial(file: Express.Multer.File, dto: CreateStudyMaterialDto) {
+  async createStudyMaterial(
+    file: Express.Multer.File,
+    dto: CreateStudyMaterialDto,
+  ) {
     const baseUrl = this.configService.get('BASE_URL');
     const fileUrl = `${baseUrl || ''}/uploads/${file.filename}`;
     const studyMaterialData = {
       title: dto.title,
       fileType: dto.fileType,
-      subjectId:Number(dto.subjectId)
+      subjectId: Number(dto.subjectId),
     };
-    console.log(studyMaterialData)
-
-
+    console.log(studyMaterialData);
 
     return this.prismaservice.studyMaterial.create({
       data: {
