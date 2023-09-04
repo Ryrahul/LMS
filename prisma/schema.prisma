@@ -39,7 +39,6 @@ model Subject {
   title         String
   courseId      Int
   course        Course          @relation(fields: [courseId], references: [id])
-  quizzes       Quiz[]
   tests         Test[]
   attendance    Attendance[]
   Feedback      Feedback[]
@@ -55,13 +54,7 @@ model Attendance {
   subject   Subject  @relation(fields: [subjectId], references: [id])
 }
 
-model Quiz {
-  id        Int        @id @default(autoincrement())
-  title     String
-  subjectId Int
-  subject   Subject    @relation(fields: [subjectId], references: [id])
-  questions Question[]
-}
+
 
 model Test {
   id        Int        @id @default(autoincrement())
@@ -86,8 +79,6 @@ model Feedback {
 model Question {
   id      Int      @id @default(autoincrement())
   text    String
-  quizId  Int
-  quiz    Quiz     @relation(fields: [quizId], references: [id])
   choices Choice[]
   Test    Test?    @relation(fields: [testId], references: [id])
   testId  Int?
