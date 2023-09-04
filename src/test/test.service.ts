@@ -1,4 +1,3 @@
-
 import { Injectable } from '@nestjs/common';
 import { CreateTestWithQuestionsDTO } from './dto/Test.dto';
 import { PrismaService } from 'src/prisma/prisma.services';
@@ -28,8 +27,19 @@ export class TestService {
           },
         },
       });
-      return test
+      return test;
     });
-    return result
+    return result;
+  }
+  async getTestByid(id: number): Promise<object> {
+    const test = await this.prismaService.test.findUnique({
+      where: { id },
+      include: { questions: { include: { choices: true } } },
+    });
+    return test;
+  }
+  async getTest(): Promise<object> {
+    const test = await this.prismaService.test.findMany();
+    return test;
   }
 }

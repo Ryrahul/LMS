@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TestModule } from './test/test.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { StudyMaterialModule } from './study-material/study-material.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { FeedbackModule } from './feedback/feedback.module';
     PrismaModule,
     TestModule,
     FeedbackModule,
+    StudyMaterialModule,
   ],
   controllers: [],
   providers: [],
