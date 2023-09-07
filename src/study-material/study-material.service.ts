@@ -29,4 +29,8 @@ export class StudyMaterialService {
       },
     });
   }
+  async getStudyMaterial(){
+    return this.prismaservice.test.findMany()
+
+  }
 }
