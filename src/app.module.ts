@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { TestModule } from './test/test.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { StudyMaterialModule } from './study-material/study-material.module';
+import { AttendanceModule } from './attendance/attendance.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { StudyMaterialModule } from './study-material/study-material.module';
     TestModule,
     FeedbackModule,
     StudyMaterialModule,
+    AttendanceModule,
   ],
   controllers: [],
   providers: [],

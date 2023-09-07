@@ -2,7 +2,6 @@ import { Injectable, ParseIntPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.services';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
-import { parse } from 'path';
 
 @Injectable()
 export class StudyMaterialService {
