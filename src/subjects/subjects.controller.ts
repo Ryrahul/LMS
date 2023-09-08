@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Post,
   UseGuards,
+  Get
 } from '@nestjs/common';
 import { SubjectsService } from './subjects.service';
 import { CreateSubjectDTO } from './dto/CreateSubject.dto';
@@ -23,5 +24,9 @@ export class SubjectsController {
   @Delete('/:id')
   deleteSubject(@Param('id', ParseIntPipe) id: number) {
     return this.subjectservices.deleteCourse(id);
+  }
+  @Get()
+  getSubject(@Param('courseId',ParseIntPipe)courseId:number){
+
   }
 }
