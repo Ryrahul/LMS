@@ -51,59 +51,57 @@ export class AuthServices {
     }
   }
   async verification(token: string, id: number) {
-    try{
-    const user = await this.prisma.user.findFirst({
-      where: {
-        Unique_String: token,
-      },
-    });
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          Unique_String: token,
+        },
+      });
 
-    console.log(user);
+      console.log(user);
 
-    if (!user) {
-      throw new NotFoundException('Verification token not found.');
+      if (!user) {
+        throw new NotFoundException('Verification token not found.');
+      }
+      await this.prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          Verified: true,
+          Unique_String: null,
+        },
+      });
+      return user;
+    } catch (e) {
+      return e.message;
     }
-    await this.prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        Verified: true,
-        Unique_String: null,
-      },
-    });
-    return user;
-  }
-  catch(e){
-    return e.message
-  }
   }
   async login(dto: LoginDto) {
-    try{
-    const student = await this.prisma.user.findUnique({
-      where: {
-        username: dto.username,
-      },
-    });
-    if (!student) {
-      throw new ForbiddenException('Credentials Incorrect');
+    try {
+      const student = await this.prisma.user.findUnique({
+        where: {
+          username: dto.username,
+        },
+      });
+      if (!student) {
+        throw new ForbiddenException('Credentials Incorrect');
+      }
+      const match = await bcrypt.compare(dto.password, student.password);
+      if (!match) {
+        new ForbiddenException('Credentials Incorrect');
+      }
+      const status = await this.status.verification(student.id);
+      if (status) {
+        console.log(student.id);
+        return { token: await this.signToken(student.username, student.id) };
+      }
+      return {
+        message: 'Email not verified',
+      };
+    } catch (e) {
+      return e.message;
     }
-    const match = await bcrypt.compare(dto.password, student.password);
-    if (!match) {
-      new ForbiddenException('Credentials Incorrect');
-    }
-    const status = await this.status.verification(student.id);
-    if (status) {
-      console.log(student.id);
-      return { token: await this.signToken(student.username, student.id) };
-    }
-    return {
-      message: 'Email not verified',
-    };
-  }
-  catch(e){
-    return e.message
-  }
   }
   signToken(username: string, id: number) {
     const payload = {

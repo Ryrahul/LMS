@@ -20,32 +20,30 @@ export class SubjectsService {
     }
   }
   async deleteCourse(id: number) {
-    try{
-    const course = await this.prisma.subject.delete({
-      where: {
-        id,
-      },
-    });
-    return {
-      message: 'Subject deleted succesfully',
-      deletedSubject: course,
-    };
-  }
-  catch(e){
-    return e.message
-  }
+    try {
+      const course = await this.prisma.subject.delete({
+        where: {
+          id,
+        },
+      });
+      return {
+        message: 'Subject deleted succesfully',
+        deletedSubject: course,
+      };
+    } catch (e) {
+      return e.message;
+    }
   }
   async getCourse(courseId: number) {
-    try{
-    const subject = await this.prisma.subject.findMany({
-      where: {
-        courseId,
-      },
-    });
-    return subject;
-  }
-  catch(E){
-    return E.message
-  }
+    try {
+      const subject = await this.prisma.subject.findMany({
+        where: {
+          courseId,
+        },
+      });
+      return subject;
+    } catch (E) {
+      return E.message;
+    }
   }
 }

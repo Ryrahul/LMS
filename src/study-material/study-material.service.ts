@@ -14,51 +14,48 @@ export class StudyMaterialService {
     file: Express.Multer.File,
     dto: CreateStudyMaterialDto,
   ) {
-    try{
-    const baseUrl = this.configService.get('BASE_URL');
-    const fileUrl = `${baseUrl || ''}/uploads/${file.filename}`;
-    const studyMaterialData = {
-      title: dto.title,
-      fileType: dto.fileType,
-      subjectId: Number(dto.subjectId),
-    };
-    console.log(studyMaterialData);
+    try {
+      const baseUrl = this.configService.get('BASE_URL');
+      const fileUrl = `${baseUrl || ''}/uploads/${file.filename}`;
+      const studyMaterialData = {
+        title: dto.title,
+        fileType: dto.fileType,
+        subjectId: Number(dto.subjectId),
+      };
+      console.log(studyMaterialData);
 
-    return this.prismaservice.studyMaterial.create({
-      data: {
-        ...studyMaterialData,
-        fileUrl,
-      },
-    });
-  }
-  catch(E){
-    return E.message
-  }
+      return this.prismaservice.studyMaterial.create({
+        data: {
+          ...studyMaterialData,
+          fileUrl,
+        },
+      });
+    } catch (E) {
+      return E.message;
+    }
   }
   async getStudyMaterial(subjectId: number) {
-    try{
-    const studyMaterial = await this.prismaservice.test.findMany({
-      where: {
-        subjectId,
-      },
-    });
-    return studyMaterial
-  }
-  catch(e){
-    return e.message
-  }
+    try {
+      const studyMaterial = await this.prismaservice.test.findMany({
+        where: {
+          subjectId,
+        },
+      });
+      return studyMaterial;
+    } catch (e) {
+      return e.message;
+    }
   }
   async deleteStudyMaterial(id: number) {
-    try{
-    const studyMaterial = await this.prismaservice.test.delete({
-      where: { id },
-    });
-    return {
-      message: 'Deleted Successfully',
-    };
-  }
-  catch(E){
-    return E.message
-  }
+    try {
+      const studyMaterial = await this.prismaservice.test.delete({
+        where: { id },
+      });
+      return {
+        message: 'Deleted Successfully',
+      };
+    } catch (E) {
+      return E.message;
+    }
   }
 }
