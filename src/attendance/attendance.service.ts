@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.services';
-import { AttendanceDto } from './dto/attendance.dto';
+import { AttendanceDto, updateAttendacneDTO } from './dto/attendance.dto';
 
 @Injectable()
 export class AttendanceService {
   constructor(private prisma: PrismaService) {}
-  async CreateAttendacne(dto: AttendanceDto) {
+  async CreateAttendacne(dto: AttendanceDto,subjectId:number) {
     const attendance = await this.prisma.attendance.create({
       data: {
         date: dto.date,
-        subjectId: dto.subjectId,
+        subjectId:subjectId,
         studentId: dto.studentId,
       },
     });
@@ -31,5 +31,30 @@ export class AttendanceService {
         attendace:attendace
     }
 
+  }
+  async updateAttendance(Id:number,dto:updateAttendacneDTO,subjectId:number){
+    const updatedAttendance=await this.prisma.attendance.update({
+      where:{
+        id:Id
+      },data:{
+        subjectId:subjectId,
+        ...dto
+        
+        
+      }
+    })
+    return updatedAttendance
+  }
+  async deleteAttendacne(id:number){
+    const attendance=await this.prisma.attendance.delete({
+      where:{
+        id:id
+    
+      }
+    })
+    return {
+      message: "Deleted Succesfully",
+      deleted_Attendacne:attendance
+    }
   }
 }

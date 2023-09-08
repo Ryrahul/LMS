@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   UploadedFile,
   UseGuards,
@@ -26,8 +29,15 @@ export class StudyMaterialController {
   ) {
     return this.studymaterial.createStudyMaterial(file, dto);
   }
+  @UseGuards(JwtAuthGuard)
   @Get()
-  async getMaterial(){
-    return this.studymaterial.getStudyMaterial()
+  async getMaterial(@Param('subjectId',ParseIntPipe)subjectId:number){
+    return this.studymaterial.getStudyMaterial(subjectId)
+  }
+  @UseGuards(JwtAuthGuard,TeacherGuard)
+  @Delete()
+  async deletematerial(@Param('id',ParseIntPipe)id:number){
+    return this.studymaterial.deleteStudyMaterial(id)
+
   }
 }
