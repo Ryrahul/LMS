@@ -9,7 +9,10 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { CreateTestWithQuestionsDTO, UpdateTestWithQuestionsDTO } from './dto/Test.dto';
+import {
+  CreateTestWithQuestionsDTO,
+  UpdateTestWithQuestionsDTO,
+} from './dto/Test.dto';
 import { TestService } from './test.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TeacherGuard } from 'src/auth/teacher.guard';
@@ -30,21 +33,25 @@ export class TestController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getAlltest() {
-    return this.testservice.getTest()
+    return this.testservice.getTest();
   }
-  
-    @Put(':id')
-  async updateTestWithQuestions(@Param('id',ParseIntPipe) testId:number , @Body() updateTestDTO: UpdateTestWithQuestionsDTO) {
+
+  @Put(':id')
+  async updateTestWithQuestions(
+    @Param('id', ParseIntPipe) testId: number,
+    @Body() updateTestDTO: UpdateTestWithQuestionsDTO,
+  ) {
     try {
-      const updatedTest = await this.testservice.updateTestWithQuestions(testId, updateTestDTO);
+      const updatedTest = await this.testservice.updateTestWithQuestions(
+        testId,
+        updateTestDTO,
+      );
       return updatedTest;
     } catch (error) {
       if (error instanceof NotFoundException) {
-    
       }
-     
+
       throw error;
     }
   }
 }
-

@@ -30,12 +30,12 @@ export class SubjectsService {
       deletedSubject: course,
     };
   }
-  async getCourse(courseId:number){
-    const subject=await this.prisma.subject.findMany({
-      where:{
-        courseId
-      }
-    })
-    return subject
+  async getCourse(courseId: number) {
+    const subject = await this.prisma.subject.findMany({
+      where: {
+        courseId,
+      },
+    });
+    return subject;
   }
 }

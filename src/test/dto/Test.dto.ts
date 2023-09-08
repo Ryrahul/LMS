@@ -1,4 +1,11 @@
-import { IsString, IsUUID, IsArray, ValidateNested, IsBoolean, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsUUID,
+  IsArray,
+  ValidateNested,
+  IsBoolean,
+  IsOptional,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateTestWithQuestionsDTO {
@@ -16,9 +23,6 @@ export class CreateChoiceDTO {
   text: string;
   isCorrect: boolean;
 }
-
-
-
 
 class UpdateChoiceDTO {
   @IsString()
@@ -41,8 +45,6 @@ class UpdateQuestionDTO {
 }
 
 export class UpdateTestWithQuestionsDTO {
-
-
   @IsString()
   title: string;
 
@@ -54,9 +56,3 @@ export class UpdateTestWithQuestionsDTO {
   @Type(() => UpdateQuestionDTO)
   questions: UpdateQuestionDTO[];
 }
-
-
-
-
-
-

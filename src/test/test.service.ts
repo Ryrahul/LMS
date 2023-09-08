@@ -1,5 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTestWithQuestionsDTO,  UpdateTestWithQuestionsDTO } from './dto/Test.dto';
+import {
+  CreateTestWithQuestionsDTO,
+  UpdateTestWithQuestionsDTO,
+} from './dto/Test.dto';
 import { PrismaService } from 'src/prisma/prisma.services';
 
 @Injectable()
@@ -42,7 +45,10 @@ export class TestService {
     const test = await this.prismaService.test.findMany();
     return test;
   }
-  async updateTestWithQuestions(testId:number,dto:UpdateTestWithQuestionsDTO) {
+  async updateTestWithQuestions(
+    testId: number,
+    dto: UpdateTestWithQuestionsDTO,
+  ) {
     const { title, subjectId, questions } = dto;
 
     const existingTest = await this.prismaService.test.findUnique({
@@ -75,7 +81,9 @@ export class TestService {
     const updatedQuestions = [];
 
     for (const q of questions) {
-      const existingQuestion = existingTest.questions.find((eq) => eq.id === q.id);
+      const existingQuestion = existingTest.questions.find(
+        (eq) => eq.id === q.id,
+      );
 
       if (existingQuestion) {
         const updatedQuestion = await this.prismaService.question.update({
@@ -84,14 +92,15 @@ export class TestService {
           },
           data: {
             text: q.text,
-          
           },
         });
 
         const updatedChoices = [];
 
         for (const choice of q.choices) {
-          const existingChoice = existingQuestion.choices.find((ec) => ec.id === choice.id);
+          const existingChoice = existingQuestion.choices.find(
+            (ec) => ec.id === choice.id,
+          );
 
           if (existingChoice) {
             const updatedChoice = await this.prismaService.choice.update({
@@ -118,7 +127,6 @@ export class TestService {
           }
         }
 
-       
         existingQuestion.choices = updatedChoices;
         updatedQuestions.push(updatedQuestion);
       } else {
@@ -139,10 +147,8 @@ export class TestService {
       }
     }
 
-    
     existingTest.questions = updatedQuestions;
 
     return updatedTest;
   }
 }
-
