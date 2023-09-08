@@ -6,6 +6,7 @@ import { AttendanceDto, updateAttendacneDTO } from './dto/attendance.dto';
 export class AttendanceService {
   constructor(private prisma: PrismaService) {}
   async CreateAttendacne(dto: AttendanceDto, subjectId: number) {
+    try{
     const attendance = await this.prisma.attendance.create({
       data: {
         date: dto.date,
@@ -15,7 +16,12 @@ export class AttendanceService {
     });
     return attendance;
   }
+  catch(e){
+    return e.message
+  }
+  }
   async getAttendacne(subjectId: number, UserId: number) {
+    try{
     const total_class = await this.prisma.attendance.count({
       where: {
         subjectId: subjectId,
@@ -31,11 +37,16 @@ export class AttendanceService {
       attendace: attendace,
     };
   }
+  catch(e){
+  return e.message
+  }
+  }
   async updateAttendance(
     Id: number,
     dto: updateAttendacneDTO,
     subjectId: number,
   ) {
+    try{
     const updatedAttendance = await this.prisma.attendance.update({
       where: {
         id: Id,
@@ -45,9 +56,13 @@ export class AttendanceService {
         ...dto,
       },
     });
-    return updatedAttendance;
+    return updatedAttendance;}
+    catch(e){
+      return e.message
+    }
   }
   async deleteAttendacne(id: number) {
+    try{
     const attendance = await this.prisma.attendance.delete({
       where: {
         id: id,
@@ -58,4 +73,9 @@ export class AttendanceService {
       deleted_Attendacne: attendance,
     };
   }
-}
+  catch(e){
+    return e.message
+  }
+  }
+  }
+

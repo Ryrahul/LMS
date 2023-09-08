@@ -51,6 +51,7 @@ export class AuthServices {
     }
   }
   async verification(token: string, id: number) {
+    try{
     const user = await this.prisma.user.findFirst({
       where: {
         Unique_String: token,
@@ -73,7 +74,12 @@ export class AuthServices {
     });
     return user;
   }
+  catch(e){
+    return e.message
+  }
+  }
   async login(dto: LoginDto) {
+    try{
     const student = await this.prisma.user.findUnique({
       where: {
         username: dto.username,
@@ -94,6 +100,10 @@ export class AuthServices {
     return {
       message: 'Email not verified',
     };
+  }
+  catch(e){
+    return e.message
+  }
   }
   signToken(username: string, id: number) {
     const payload = {

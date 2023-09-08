@@ -4,6 +4,7 @@ import {
   UpdateTestWithQuestionsDTO,
 } from './dto/Test.dto';
 import { PrismaService } from 'src/prisma/prisma.services';
+import { retry } from 'rxjs';
 
 @Injectable()
 export class TestService {
@@ -11,6 +12,7 @@ export class TestService {
 
   async createTestWithQuestions(createTestDTO: CreateTestWithQuestionsDTO) {
     const { title, subjectId, questions } = createTestDTO;
+    try{
 
     const result = await this.prismaService.$transaction(async (prisma) => {
       const test = await prisma.test.create({
@@ -34,21 +36,38 @@ export class TestService {
     });
     return result;
   }
+  catch(e){
+    return e.message
+  }
+  }
   async getTestByid(id: number): Promise<object> {
+    try{
     const test = await this.prismaService.test.findUnique({
       where: { id },
       include: { questions: { include: { choices: true } } },
     });
     return test;
   }
+  catch(E){
+    return E.message
+  }
+  }
   async getTest(): Promise<object> {
+    try{
+
     const test = await this.prismaService.test.findMany();
     return test;
+    }
+    catch(E){
+      return E.message
+    }
+    
   }
   async updateTestWithQuestions(
     testId: number,
     dto: UpdateTestWithQuestionsDTO,
   ) {
+    try{
     const { title, subjectId, questions } = dto;
 
     const existingTest = await this.prismaService.test.findUnique({
@@ -150,5 +169,9 @@ export class TestService {
     existingTest.questions = updatedQuestions;
 
     return updatedTest;
+  }
+  catch(E){
+    return E.message
+  }
   }
 }

@@ -6,6 +6,7 @@ import { FeedbackDto } from './dto/feedback.dto';
 export class FeedbackService {
   constructor(private prismaservice: PrismaService) {}
   async CreateFeedback(dto: FeedbackDto) {
+    try{
     const feedback = await this.prismaservice.feedback.create({
       data: {
         ...dto,
@@ -13,13 +14,23 @@ export class FeedbackService {
     });
     return feedback;
   }
+  catch(e){
+    return e.message
+  }
+  }
   async GetFeedback(subjectId: number) {
+    try{
     const feedback = await this.prismaservice.feedback.findMany({
       where: { subjectId: subjectId },
     });
     return feedback;
   }
+  catch(e){
+    return e.message
+  }
+  }
   async deleteFeedback(id: number) {
+    try{
     const feedback = await this.prismaservice.feedback.delete({
       where: {
         id: id,
@@ -28,5 +39,9 @@ export class FeedbackService {
     return {
       message: 'deleted Feedback',
     };
+  }
+  catch(e){
+    e.message
+  }
   }
 }
