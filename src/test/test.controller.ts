@@ -15,7 +15,7 @@ import { TeacherGuard } from 'src/auth/teacher.guard';
 @Controller('test')
 export class TestController {
   constructor(private testservice: TestService) {}
-  @UseGuards(JwtAuthGuard,TeacherGuard)
+  @UseGuards(JwtAuthGuard, TeacherGuard)
   @Post()
   createTest(@Body() dto: CreateTestWithQuestionsDTO) {
     return this.testservice.createTestWithQuestions(dto);

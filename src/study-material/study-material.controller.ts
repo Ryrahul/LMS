@@ -20,7 +20,7 @@ import { TeacherGuard } from 'src/auth/teacher.guard';
 @Controller('study-material')
 export class StudyMaterialController {
   constructor(private studymaterial: StudyMaterialService) {}
-  @UseGuards(JwtAuthGuard,TeacherGuard)
+  @UseGuards(JwtAuthGuard, TeacherGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerConfig))
   async uploadFile(
@@ -31,13 +31,12 @@ export class StudyMaterialController {
   }
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getMaterial(@Param('subjectId',ParseIntPipe)subjectId:number){
-    return this.studymaterial.getStudyMaterial(subjectId)
+  async getMaterial(@Param('subjectId', ParseIntPipe) subjectId: number) {
+    return this.studymaterial.getStudyMaterial(subjectId);
   }
-  @UseGuards(JwtAuthGuard,TeacherGuard)
+  @UseGuards(JwtAuthGuard, TeacherGuard)
   @Delete()
-  async deletematerial(@Param('id',ParseIntPipe)id:number){
-    return this.studymaterial.deleteStudyMaterial(id)
-
+  async deletematerial(@Param('id', ParseIntPipe) id: number) {
+    return this.studymaterial.deleteStudyMaterial(id);
   }
 }

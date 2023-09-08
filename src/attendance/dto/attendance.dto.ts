@@ -6,10 +6,8 @@ export class AttendanceDto {
   @IsNotEmpty()
   @IsNumber()
   studentId: number;
- 
 }
-export class updateAttendacneDTO{
+export class updateAttendacneDTO {
   @IsNumber()
-
-  studentId:number
+  studentId: number;
 }

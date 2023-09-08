@@ -1,4 +1,13 @@
-import { Body, Controller, Post,Get, ParseIntPipe,Param, UseGuards, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  ParseIntPipe,
+  Param,
+  UseGuards,
+  Delete,
+} from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { FeedbackDto } from './dto/feedback.dto';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
@@ -13,15 +22,12 @@ export class FeedbackController {
   }
   @UseGuards(JwtAuthGuard)
   @Get()
-  getFeedback(@Param('subjectId',ParseIntPipe)subjectId:number){
-    return this.feedbackservice.GetFeedback(subjectId)
-
+  getFeedback(@Param('subjectId', ParseIntPipe) subjectId: number) {
+    return this.feedbackservice.GetFeedback(subjectId);
   }
   @UseGuards(JwtAuthGuard)
   @Delete()
-  deleteFeedback(@Param('Id',ParseIntPipe)Id:number){
-    return this.feedbackservice.deleteFeedback(Id)
-
+  deleteFeedback(@Param('Id', ParseIntPipe) Id: number) {
+    return this.feedbackservice.deleteFeedback(Id);
   }
-
 }

@@ -29,21 +29,19 @@ export class StudyMaterialService {
       },
     });
   }
-  async getStudyMaterial(subjectId:number){
-  const studyMaterial=await this.prismaservice.test.findMany({
-    where:{
-      subjectId
-    }
-  })
-
+  async getStudyMaterial(subjectId: number) {
+    const studyMaterial = await this.prismaservice.test.findMany({
+      where: {
+        subjectId,
+      },
+    });
   }
-  async deleteStudyMaterial(id:number){
-    const studyMaterial=await this.prismaservice.test.delete({
-      where:{id}
-    })
+  async deleteStudyMaterial(id: number) {
+    const studyMaterial = await this.prismaservice.test.delete({
+      where: { id },
+    });
     return {
-      message:"Deleted Successfully"
-    }
-    
+      message: 'Deleted Successfully',
+    };
   }
 }
