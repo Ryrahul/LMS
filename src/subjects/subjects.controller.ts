@@ -27,6 +27,6 @@ export class SubjectsController {
   }
   @Get('/:courseId')
   getSubject(@Param('courseId', ParseIntPipe) courseId: number) {
-    return this.subjectservices.getCourse(courseId)
+    return this.subjectservices.getCourse(courseId);
   }
 }

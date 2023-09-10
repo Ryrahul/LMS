@@ -49,7 +49,7 @@ export class UpdateTestWithQuestionsDTO {
   @IsString()
   title: string;
 
-@IsNumber()
+  @IsNumber()
   subjectId: number;
 
   @IsArray()
