@@ -5,6 +5,7 @@ import {
   ValidateNested,
   IsBoolean,
   IsOptional,
+  IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -48,7 +49,7 @@ export class UpdateTestWithQuestionsDTO {
   @IsString()
   title: string;
 
-  @IsUUID()
+@IsNumber()
   subjectId: number;
 
   @IsArray()

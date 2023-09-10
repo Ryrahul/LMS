@@ -93,7 +93,6 @@ export class AuthServices {
       }
       const status = await this.status.verification(student.id);
       if (status) {
-        console.log(student.id);
         return { token: await this.signToken(student.username, student.id) };
       }
       return {

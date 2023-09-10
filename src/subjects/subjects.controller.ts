@@ -25,6 +25,8 @@ export class SubjectsController {
   deleteSubject(@Param('id', ParseIntPipe) id: number) {
     return this.subjectservices.deleteCourse(id);
   }
-  @Get()
-  getSubject(@Param('courseId', ParseIntPipe) courseId: number) {}
+  @Get('/:courseId')
+  getSubject(@Param('courseId', ParseIntPipe) courseId: number) {
+    return this.subjectservices.getCourse(courseId)
+  }
 }

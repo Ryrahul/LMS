@@ -4,7 +4,6 @@ import {
   UpdateTestWithQuestionsDTO,
 } from './dto/Test.dto';
 import { PrismaService } from 'src/prisma/prisma.services';
-import { retry } from 'rxjs';
 
 @Injectable()
 export class TestService {
