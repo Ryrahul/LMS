@@ -12,8 +12,8 @@ import {
 import { AttendanceDto } from './dto/attendance.dto';
 import { AttendanceService } from './attendance.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
-import { TeacherGuard } from 'src/auth/teacher.guard';
-import { AdminGuard } from 'src/courses/courses.guard';
+import { TeacherGuard } from 'src/Guards/teacher.guard';
+import { AdminGuard } from 'src/Guards/course.guard';
 
 @Controller('attendance')
 export class AttendanceController {

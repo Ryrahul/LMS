@@ -15,8 +15,7 @@ import {
 } from './dto/Test.dto';
 import { TestService } from './test.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
-import { TeacherGuard } from 'src/auth/teacher.guard';
-
+import { TeacherGuard } from 'src/Guards/teacher.guard';
 @Controller('test')
 export class TestController {
   constructor(private testservice: TestService) {}
