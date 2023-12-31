@@ -9,6 +9,8 @@ import { TestModule } from './test/test.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { StudyMaterialModule } from './study-material/study-material.module';
 import { AttendanceModule } from './attendance/attendance.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -23,6 +25,11 @@ import { AttendanceModule } from './attendance/attendance.module';
     AttendanceModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+      {
+    provide: APP_GUARD,
+    useClass: JwtAuthGuard,
+  },
+  ],
 })
 export class AppModule {}
