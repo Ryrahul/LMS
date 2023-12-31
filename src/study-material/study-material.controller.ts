@@ -12,17 +12,16 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
-import { multerConfig } from './multer.config';
 import { StudyMaterialService } from './study-material.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
-import { TeacherGuard } from 'src/auth/teacher.guard';
+import { TeacherGuard } from 'src/Guards/teacher.guard';
 
 @Controller('study-material')
 export class StudyMaterialController {
   constructor(private studymaterial: StudyMaterialService) {}
   @UseGuards(JwtAuthGuard, TeacherGuard)
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', multerConfig))
+  @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Body() dto: CreateStudyMaterialDto,
