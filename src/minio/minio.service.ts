@@ -10,9 +10,9 @@ export class MinioService {
   private secretKey: string;
   constructor(private readonly configService: ConfigService) {
     this.accessKey = configService.getOrThrow('ACCESS_KEY');
-    this.accessKey = configService.getOrThrow('SECRET_KEY');
-    this.accessKey = configService.getOrThrow('PORT');
-    this.accessKey = configService.getOrThrow('END_POINT');
+    this.secretKey = configService.getOrThrow('SECRET_KEY');
+    this.port = parseInt(configService.getOrThrow('PORT'));
+    this.endPoint = configService.getOrThrow('END_POINT');
     this.minioClient = new Minio.Client({
       endPoint: this.endPoint,
       port: this.port,
@@ -21,14 +21,19 @@ export class MinioService {
       secretKey: this.secretKey,
     });
   }
-  async UploadFile(file: Express.Multer.File, key: string) {
+  async UploadFile(file:Buffer, key: string) {
     try {
       this.minioClient.putObject(
-        this.configService.getOrThrow('BUCKET_NAME'),
+        this.configService.getOrThrow('BUCKET'),
         key,
-        file.buffer,
-        (err) => {
-          console.log(err);
+        file,
+        (err,objInfo) => {
+            if(err){
+          console.log(err)
+            }
+            else{
+                console.log(objInfo)
+            };
         },
       );
     } catch (e) {
