@@ -46,12 +46,15 @@ export class MinioService {
       'BUCKET_NAME',
     )}/${key}`;
   }
-  async DeleteFile(key: string) {
+  async DeleteFile(key: string):Promise<void> {
     try {
       await this.minioClient.removeObject(
         this.configService.getOrThrow('BUCKET_NAME'),
         key,
       );
     } catch (e) {}
+  }
+  async GetObject(key:string){
+    await this.minioClient.getObject(this.configService.getOrThrow('BUCKET_NAME'),key)
   }
 }
