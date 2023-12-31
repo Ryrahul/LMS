@@ -11,7 +11,7 @@ import {
 import { SubjectsService } from './subjects.service';
 import { CreateSubjectDTO } from './dto/CreateSubject.dto';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
-import { AdminGuard } from 'src/courses/courses.guard';
+import { AdminGuard } from 'src/Guards/course.guard';
 
 @Controller('subjects')
 export class SubjectsController {
