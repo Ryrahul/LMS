@@ -28,7 +28,7 @@ export class EmailService {
 
       html: `
     <p>Click the following link to verify your email:</p>
-    <a href="http://localhost:3001/auth/verify/${id}">Verify Email</a>`,
+    <a href="${this.configService.get('SERVER_URL')}/${id}">Verify Email</a>`,
     };
 
     await this.transporter.sendMail(mailOptions);
