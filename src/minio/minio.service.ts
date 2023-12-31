@@ -37,7 +37,7 @@ export class MinioService {
   }
 
   async GetfileUrl(key: string) {
-    return `https://my-minio-server.com/${this.configservice.get(
+    return `https://my-minio-server.com/${this.configService.get(
       'BUCKET_NAME',
     )}/${key}`;
   }
