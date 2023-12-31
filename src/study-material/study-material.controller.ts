@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Post,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -46,10 +47,10 @@ export class StudyMaterialController {
     
   }
   @Get(':file_key')
-  async GetVideo(@Param('file_key') file_key:string, @Req() res:any){
+  async GetVideo(@Param('file_key') file_key:string, @Res() res:any){
     const videoStream=await this.studymaterial.GetVideo(file_key)
-    res.setHeader('Content-Type', 'video/mp4')
-     videoStream
+res.setHeader('Content-Type', 'video/mp4');   
+  videoStream
       .format('mp4')
       .videoCodec('libx264')
       .audioCodec('aac')

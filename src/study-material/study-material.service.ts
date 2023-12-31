@@ -48,7 +48,7 @@ export class StudyMaterialService {
   }
   async deleteStudyMaterial(id: number) {
     try {
-      const studyMaterial = await this.prismaservice.test.delete({
+      await this.prismaservice.test.delete({
         where: { id },
       });
       return {
