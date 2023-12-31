@@ -19,22 +19,17 @@ export class AuthController {
   signup(@Body() dto: SingupDto) {
     return this.authservice.signUp(dto);
   }
-  @Get('verify/:token/:id')
+  @Get('verify/:id')
   verification(
     @Param('token') token: string,
     @Param('id', ParseIntPipe) id: number,
   ) {
     console.log(token);
 
-    return this.authservice.verification(token, id);
+    return this.authservice.verification( id);
   }
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authservice.login(dto);
-  }
-  @UseGuards(JwtAuthGuard)
-  @Get('jwt')
-  jwt() {
-    return 'hi';
   }
 }

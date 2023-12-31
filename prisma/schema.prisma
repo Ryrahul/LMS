@@ -11,16 +11,15 @@ datasource db {
 }
 
 model User {
-  id            Int          @id @default(autoincrement())
-  username      String       @unique
-  email         String       @unique
-  password      String
-  role          String?      @default("Student")
-  Course        Course[]
-  Attendance    Attendance[]
-  Feedback      Feedback[]
-  Unique_String String?      @unique
-  Verified      Boolean      @default(false)
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  email      String       @unique
+  password   String
+  role       String?      @default("Student")
+  Course     Course[]
+  Attendance Attendance[]
+  Feedback   Feedback[]
+  Verified   Boolean      @default(false)
 }
 
 model Course {
@@ -53,8 +52,6 @@ model Attendance {
   student   User     @relation(fields: [studentId], references: [id])
   subject   Subject  @relation(fields: [subjectId], references: [id])
 }
-
-
 
 model Test {
   id        Int        @id @default(autoincrement())
@@ -97,6 +94,6 @@ model StudyMaterial {
   title     String
   fileUrl   String
   fileType  String
-  subjectId  Int
+  subjectId Int
   subject   Subject @relation(fields: [subjectId], references: [id])
 }

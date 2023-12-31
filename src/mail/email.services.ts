@@ -20,7 +20,7 @@ export class EmailService {
     );
   }
 
-  async sendVerificationEmail(email: string, token: string, id: string) {
+  async sendVerificationEmail(email: string,id: number) {
     const mailOptions = {
       from: this.configService.get('user'),
       to: email,
@@ -28,7 +28,7 @@ export class EmailService {
 
       html: `
     <p>Click the following link to verify your email:</p>
-    <a href="http://localhost:3001/auth/verify/${token}/${id}">Verify Email</a>`,
+    <a href="http://localhost:3001/auth/verify/${id}">Verify Email</a>`,
     };
 
     await this.transporter.sendMail(mailOptions);

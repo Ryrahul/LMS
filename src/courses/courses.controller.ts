@@ -12,8 +12,8 @@ import {
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreateCourseDto } from './dto/CreateCourse.dto';
 import { CourseService } from './courses.services';
-import { AdminGuard } from './courses.guard';
 import { UpdateCourseDTO } from './dto/UpdateCourse.dto';
+import { AdminGuard } from 'src/Guards/course.guard';
 
 @Controller('courses')
 export class CoursesController {

@@ -7,11 +7,11 @@ import { PrismaService } from 'src/prisma/prisma.services';
 import { SingupDto } from './dto/Signup.dto';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { EmailService } from './email.services';
 import { LoginDto } from './dto/Login.dto';
 import { VerificationService } from './Verification';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { EmailService } from 'src/mail/email.services';
 
 @Injectable()
 export class AuthServices {
@@ -22,11 +22,9 @@ export class AuthServices {
     private jwt: JwtService,
     private config: ConfigService,
   ) {}
-  async signUp(dto: SingupDto) {
+  async signUp(dto: SingupDto):Promise<{message:string}>{
     try {
       const verificationToken = uuidv4();
-      console.log(verificationToken);
-
       const hash = await bcrypt.hash(dto.password, 10);
       const user = await this.prisma.user.create({
         data: {
@@ -39,8 +37,7 @@ export class AuthServices {
       });
       await this.email.sendVerificationEmail(
         dto.email,
-        verificationToken,
-        user.id.toString(),
+        user.id,
       );
 
       return {
@@ -50,32 +47,27 @@ export class AuthServices {
       return e.message;
     }
   }
-  async verification(token: string, id: number) {
-    try {
-      const user = await this.prisma.user.findFirst({
-        where: {
-          Unique_String: token,
-        },
-      });
-
-      console.log(user);
-
-      if (!user) {
-        throw new NotFoundException('Verification token not found.');
-      }
-      await this.prisma.user.update({
-        where: {
-          id: id,
-        },
-        data: {
-          Verified: true,
-          Unique_String: null,
-        },
-      });
-      return user;
-    } catch (e) {
-      return e.message;
+  async verification(id: number) {
+    const UnverifiedUser=await this.prisma.user.findFirst({
+      where:{
+        id
+      },
+    })
+    if(!UnverifiedUser){
+      throw new NotFoundException("No Such User Found")
     }
+    await this.prisma.user.update({
+      where:{
+        id
+      },
+      data:{
+        Verified:true
+      }
+    })
+    return {
+      message:"Email Verified Successfully"
+    }
+
   }
   async login(dto: LoginDto) {
     try {
