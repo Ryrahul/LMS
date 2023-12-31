@@ -4,18 +4,35 @@ import { PrismaService } from 'src/prisma/prisma.services';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
 import { retry } from 'rxjs';
 import { randomUUID } from 'crypto';
+import { MinioService } from 'src/minio/minio.service';
 
 @Injectable()
 export class StudyMaterialService {
   constructor(
     private prismaservice: PrismaService,
     private configService: ConfigService,
+    private readonly minioService:MinioService
   ) {}
   async createStudyMaterial(
-    file: Express.Multer.File,
+    file:Express.Multer.File,
     dto: CreateStudyMaterialDto,
   ) {
     const file_key = randomUUID();
+    console.log(file)
+    const file_url=await this.minioService.GetfileUrl(file_key)
+    await this.minioService.UploadFile(file.buffer,file_key)
+    console.log(+dto.subjectId)
+    return await this.prismaservice.studyMaterial.create({
+      data:{
+        fileUrl:file_url,
+        title:dto.title,
+        fileType:dto.fileType,
+        subjectId:+dto.subjectId
+      
+        
+
+      }
+    })
   }
   async getStudyMaterial(subjectId: number) {
     try {
