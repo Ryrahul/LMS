@@ -22,7 +22,7 @@ export class AuthServices {
     private jwt: JwtService,
     private config: ConfigService,
   ) {}
-  async signUp(dto: SingupDto):Promise<{message:string}>{
+  async signUp(dto: SingupDto): Promise<{ message: string }> {
     try {
       const verificationToken = uuidv4();
       const hash = await bcrypt.hash(dto.password, 10);
@@ -32,13 +32,9 @@ export class AuthServices {
           email: dto.email,
           password: hash,
           username: dto.username,
-          Unique_String: verificationToken,
         },
       });
-      await this.email.sendVerificationEmail(
-        dto.email,
-        user.id,
-      );
+      await this.email.sendVerificationEmail(dto.email, user.id);
 
       return {
         message: 'Verification link sent to mail',
@@ -48,26 +44,25 @@ export class AuthServices {
     }
   }
   async verification(id: number) {
-    const UnverifiedUser=await this.prisma.user.findFirst({
-      where:{
-        id
+    const UnverifiedUser = await this.prisma.user.findFirst({
+      where: {
+        id,
       },
-    })
-    if(!UnverifiedUser){
-      throw new NotFoundException("No Such User Found")
+    });
+    if (!UnverifiedUser) {
+      throw new NotFoundException('No Such User Found');
     }
     await this.prisma.user.update({
-      where:{
-        id
+      where: {
+        id,
       },
-      data:{
-        Verified:true
-      }
-    })
+      data: {
+        Verified: true,
+      },
+    });
     return {
-      message:"Email Verified Successfully"
-    }
-
+      message: 'Email Verified Successfully',
+    };
   }
   async login(dto: LoginDto) {
     try {

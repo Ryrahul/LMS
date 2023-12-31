@@ -20,7 +20,7 @@ export class EmailService {
     );
   }
 
-  async sendVerificationEmail(email: string,id: number) {
+  async sendVerificationEmail(email: string, id: number) {
     const mailOptions = {
       from: this.configService.get('user'),
       to: email,

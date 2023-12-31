@@ -10,9 +10,10 @@ import { EmailModule } from 'src/mail/email.module';
   imports: [
     JwtModule.register({
       global: true,
-    }),EmailModule
+    }),
+    EmailModule,
   ],
   controllers: [AuthController],
-  providers: [AuthServices,  VerificationService, JwtStrategy],
+  providers: [AuthServices, VerificationService, JwtStrategy],
 })
 export class AuthModule {}

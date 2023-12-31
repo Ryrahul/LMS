@@ -29,7 +29,7 @@ export class AuthController {
   ) {
     console.log(token);
 
-    return this.authservice.verification( id);
+    return this.authservice.verification(id);
   }
   @Public()
   @Post('login')

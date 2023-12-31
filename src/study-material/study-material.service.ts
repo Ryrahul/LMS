@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.services';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
 import { retry } from 'rxjs';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class StudyMaterialService {
@@ -14,25 +15,7 @@ export class StudyMaterialService {
     file: Express.Multer.File,
     dto: CreateStudyMaterialDto,
   ) {
-    try {
-      const baseUrl = this.configService.get('BASE_URL');
-      const fileUrl = `${baseUrl || ''}/uploads/${file.filename}`;
-      const studyMaterialData = {
-        title: dto.title,
-        fileType: dto.fileType,
-        subjectId: Number(dto.subjectId),
-      };
-      console.log(studyMaterialData);
-
-      return this.prismaservice.studyMaterial.create({
-        data: {
-          ...studyMaterialData,
-          fileUrl,
-        },
-      });
-    } catch (E) {
-      return E.message;
-    }
+    const file_key = randomUUID();
   }
   async getStudyMaterial(subjectId: number) {
     try {
