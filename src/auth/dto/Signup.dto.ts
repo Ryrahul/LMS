@@ -13,5 +13,4 @@ export class SingupDto {
 
   @IsNotEmpty()
   password: string;
-  Unique_String: string;
 }

@@ -6,5 +6,4 @@ export class LoginDto {
 
   @IsNotEmpty()
   password: string;
-  Unique_String: string;
 }

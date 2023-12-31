@@ -24,7 +24,6 @@ export class AuthServices {
   ) {}
   async signUp(dto: SingupDto): Promise<{ message: string }> {
     try {
-      const verificationToken = uuidv4();
       const hash = await bcrypt.hash(dto.password, 10);
       const user = await this.prisma.user.create({
         data: {
