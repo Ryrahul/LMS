@@ -2,9 +2,9 @@ import { Injectable, ParseIntPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.services';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
-import { retry } from 'rxjs';
 import { randomUUID } from 'crypto';
 import { MinioService } from 'src/minio/minio.service';
+import * as fluentffmpeg from "fluent-ffmpeg"
 
 @Injectable()
 export class StudyMaterialService {
@@ -56,6 +56,15 @@ export class StudyMaterialService {
       };
     } catch (E) {
       return E.message;
+    }
+  }
+  async GetVideo(file_key:string):Promise<any>{
+    try{
+      const videoStream=await this.minioService.GetObject(file_key)
+      return fluentffmpeg().input(videoStream)
+    }
+    catch(e){
+return e.message
     }
   }
 }

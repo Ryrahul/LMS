@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -13,14 +14,13 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateStudyMaterialDto } from './dto/Studymaterial.dto';
 import { StudyMaterialService } from './study-material.service';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TeacherGuard } from 'src/Guards/teacher.guard';
 
 @Controller('study-material')
 export class StudyMaterialController {
   constructor(private studymaterial: StudyMaterialService) {}
-  @UseGuards(JwtAuthGuard, TeacherGuard)
-  @Post('upload')
+  @UseGuards(TeacherGuard)
+  @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
@@ -28,14 +28,33 @@ export class StudyMaterialController {
   ) {
     return this.studymaterial.createStudyMaterial(file, dto);
   }
-  @UseGuards(JwtAuthGuard)
+  @UseGuards()
   @Get()
   async getMaterial(@Param('subjectId', ParseIntPipe) subjectId: number) {
     return this.studymaterial.getStudyMaterial(subjectId);
   }
-  @UseGuards(JwtAuthGuard, TeacherGuard)
+  @UseGuards(TeacherGuard)
   @Delete()
   async deletematerial(@Param('id', ParseIntPipe) id: number) {
     return this.studymaterial.deleteStudyMaterial(id);
   }
+  @Post('video')
+  @UseInterceptors(FileInterceptor('video'))
+  async VideoMaterial(@Body() dto:CreateStudyMaterialDto, @UploadedFile() video:Express.Multer.File){
+    return this.studymaterial.createStudyMaterial(video,dto)
+
+    
+  }
+  @Get(':file_key')
+  async GetVideo(@Param('file_key') file_key:string, @Req() res:any){
+    const videoStream=await this.studymaterial.GetVideo(file_key)
+    res.setHeader('Content-Type', 'video/mp4')
+     videoStream
+      .format('mp4')
+      .videoCodec('libx264')
+      .audioCodec('aac')
+      .pipe(res, { end: true });
+  }
+
+
 }
