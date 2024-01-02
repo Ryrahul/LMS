@@ -6,6 +6,6 @@ import { Minio } from 'src/minio/minio.module';
 @Module({
   controllers: [StudyMaterialController],
   providers: [StudyMaterialService],
-  imports:[Minio]
+  imports: [Minio],
 })
 export class StudyMaterialModule {}

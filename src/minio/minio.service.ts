@@ -21,19 +21,18 @@ export class MinioService {
       secretKey: this.secretKey,
     });
   }
-  async UploadFile(file:Buffer, key: string) {
+  async UploadFile(file: Buffer, key: string) {
     try {
       this.minioClient.putObject(
         this.configService.getOrThrow('BUCKET'),
         key,
         file,
-        (err,objInfo) => {
-            if(err){
-          console.log(err)
-            }
-            else{
-                console.log(objInfo)
-            };
+        (err, objInfo) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(objInfo);
+          }
         },
       );
     } catch (e) {
@@ -46,7 +45,7 @@ export class MinioService {
       'BUCKET_NAME',
     )}/${key}`;
   }
-  async DeleteFile(key: string):Promise<void> {
+  async DeleteFile(key: string): Promise<void> {
     try {
       await this.minioClient.removeObject(
         this.configService.getOrThrow('BUCKET'),
@@ -54,7 +53,10 @@ export class MinioService {
       );
     } catch (e) {}
   }
-  async GetObject(key:string){
-    return await this.minioClient.getObject(this.configService.getOrThrow('BUCKET'),key)
+  async GetObject(key: string) {
+    return await this.minioClient.getObject(
+      this.configService.getOrThrow('BUCKET'),
+      key,
+    );
   }
 }

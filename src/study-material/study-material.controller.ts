@@ -41,21 +41,20 @@ export class StudyMaterialController {
   }
   @Post('video')
   @UseInterceptors(FileInterceptor('video'))
-  async VideoMaterial(@Body() dto:CreateStudyMaterialDto, @UploadedFile() video:Express.Multer.File){
-    return this.studymaterial.createStudyMaterial(video,dto)
-
-    
+  async VideoMaterial(
+    @Body() dto: CreateStudyMaterialDto,
+    @UploadedFile() video: Express.Multer.File,
+  ) {
+    return this.studymaterial.createStudyMaterial(video, dto);
   }
   @Get(':file_key')
-  async GetVideo(@Param('file_key') file_key:string, @Res() res:any){
-    const videoStream=await this.studymaterial.GetVideo(file_key)
-res.setHeader('Content-Type', 'video/mp4');   
-  videoStream
+  async GetVideo(@Param('file_key') file_key: string, @Res() res: any) {
+    const videoStream = await this.studymaterial.GetVideo(file_key);
+    res.setHeader('Content-Type', 'video/mp4');
+    videoStream
       .format('mp4')
       .videoCodec('libx264')
       .audioCodec('aac')
       .pipe(res, { end: true });
   }
-
-
 }
