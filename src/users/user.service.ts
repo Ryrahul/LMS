@@ -1,16 +1,20 @@
 import { PrismaService } from 'src/prisma/prisma.services';
-import { FindUserDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/Update.user.dto';
 import * as bcrypt from 'bcrypt';
 
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
-  async FindUserByUsername(dto: FindUserDto) {
+  async FindUserByUsername(username: string) {
+    try{
     return await this.prismaService.user.findUnique({
       where: {
-        username: dto.username,
+        username
       },
     });
+}
+catch(e){
+    return e.message
+}
   }
   async ChangeEmail(dto: UpdateUserDto) {
     try {
