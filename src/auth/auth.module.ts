@@ -13,7 +13,7 @@ import { UsersModule } from 'src/users/users.module';
       global: true,
     }),
     EmailModule,
-    UsersModule
+    UsersModule,
   ],
   controllers: [AuthController],
   providers: [AuthServices, VerificationService, JwtStrategy],

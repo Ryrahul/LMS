@@ -5,16 +5,15 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
   async FindUserByUsername(username: string) {
-    try{
-    return await this.prismaService.user.findUnique({
-      where: {
-        username
-      },
-    });
-}
-catch(e){
-    return e.message
-}
+    try {
+      return await this.prismaService.user.findUnique({
+        where: {
+          username,
+        },
+      });
+    } catch (e) {
+      return e.message;
+    }
   }
   async ChangeEmail(dto: UpdateUserDto) {
     try {

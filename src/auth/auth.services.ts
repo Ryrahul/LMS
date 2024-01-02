@@ -22,7 +22,7 @@ export class AuthServices {
     private status: VerificationService,
     private jwt: JwtService,
     private config: ConfigService,
-    private userService:UserService
+    private userService: UserService,
   ) {}
   async signUp(dto: SingupDto): Promise<{ message: string }> {
     try {
@@ -67,7 +67,7 @@ export class AuthServices {
   }
   async login(dto: LoginDto) {
     try {
-      const student=await this.userService.FindUserByUsername(dto.username)
+      const student = await this.userService.FindUserByUsername(dto.username);
       if (!student) {
         throw new ForbiddenException('Credentials Incorrect');
       }
