@@ -33,4 +33,17 @@ export class EmailService {
 
     await this.transporter.sendMail(mailOptions);
   }
+  async resetPassword(email: string, password: string) {
+    const mailOptions = {
+      from:this.configService.getOrThrow('user'),
+      to: email,
+      subject: 'Email Verification',
+
+      html: `
+    <p>You sent a password reset Request</p>
+    <p>Your new Password is ${password}</p>`,
+    };
+        await this.transporter.sendMail(mailOptions);
+
+  }
 }

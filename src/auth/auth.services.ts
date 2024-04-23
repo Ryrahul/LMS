@@ -67,7 +67,13 @@ export class AuthServices {
   }
   async login(dto: LoginDto) {
     try {
-      const student = await this.userService.FindUserByUsername(dto.username);
+      const trial=await this.userService.FindUserByUsername(dto.username)
+      console.log(trial)
+    const student=await this.prisma.user.findUnique({
+      where:{
+        username:dto.username
+      }
+    })
       if (!student) {
         throw new ForbiddenException('Credentials Incorrect');
       }
@@ -83,6 +89,7 @@ export class AuthServices {
         message: 'Email not verified',
       };
     } catch (e) {
+      console.log(e)
       return e.message;
     }
   }
