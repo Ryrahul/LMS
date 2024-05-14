@@ -22,11 +22,12 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 @ApiTags('Attendance')
+@ApiBearerAuth() // Requires authentication
 @Controller('attendance')
 export class AttendanceController {
   constructor(private attendaceservice: AttendanceService) {}
   @UseGuards(JwtAuthGuard, TeacherGuard)
-  @ApiBearerAuth() // Requires authentication
+  @Post('/:subjectId')
   @ApiOperation({ summary: 'Create Attendance' })
   @ApiParam({
     name: 'subjectId',
@@ -34,7 +35,6 @@ export class AttendanceController {
     type: 'number',
   })
   @ApiBody({ type: AttendanceDto })
-  @Post('/:subjectId')
   createAttendacne(
     @Body() dto: AttendanceDto,
     @Param('subjectId', ParseIntPipe) subjectId: number,
