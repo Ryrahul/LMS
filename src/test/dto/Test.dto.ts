@@ -8,6 +8,7 @@ import {
   IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTestWithQuestionsDTO {
   title: string;
@@ -26,6 +27,7 @@ export class CreateChoiceDTO {
 }
 
 class UpdateChoiceDTO {
+  @ApiProperty()
   @IsString()
   text: string;
 
@@ -35,6 +37,7 @@ class UpdateChoiceDTO {
 }
 
 class UpdateQuestionDTO {
+  @ApiProperty()
   @IsString()
   text: string;
 
@@ -46,12 +49,13 @@ class UpdateQuestionDTO {
 }
 
 export class UpdateTestWithQuestionsDTO {
+  @ApiProperty()
   @IsString()
   title: string;
-
+  @ApiProperty()
   @IsNumber()
   subjectId: number;
-
+  @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => UpdateQuestionDTO)

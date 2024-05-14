@@ -1,4 +1,6 @@
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+
 import {
   IsString,
   IsNotEmpty,
@@ -9,14 +11,15 @@ import {
 } from 'class-validator';
 
 export class CreateStudyMaterialDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   title: string;
-
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   fileType: string;
-
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   @Type(() => Number)
