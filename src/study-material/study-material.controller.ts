@@ -40,7 +40,7 @@ export class StudyMaterialController {
     return this.studymaterial.createStudyMaterial(file, dto);
   }
   @UseGuards()
-  @Get()
+  @Get(':subjectId')
   @ApiOperation({ summary: 'Get study-material' })
   @ApiParam({
     name: 'subjectId',

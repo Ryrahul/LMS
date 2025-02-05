@@ -33,7 +33,7 @@ export class StudyMaterialService {
   }
   async getStudyMaterial(subjectId: number) {
     try {
-      const studyMaterial = await this.prismaservice.test.findMany({
+      const studyMaterial = await this.prismaservice.studyMaterial.findMany({
         where: {
           subjectId,
         },
